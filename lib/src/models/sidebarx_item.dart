@@ -5,6 +5,11 @@ class SidebarXItem {
     this.label,
     this.icon,
     this.iconWidget,
+    this.height,
+    this.heightselected,
+    this.padding,
+    this.decoration,
+    this.decorationselected,
     this.onTap,
     this.onLongPress,
     this.onSecondaryTap,
@@ -17,6 +22,11 @@ class SidebarXItem {
   final String? label;
   final IconData? icon;
   final Widget? iconWidget;
+  final double ?height;
+  final double ?heightselected;
+  final EdgeInsets? padding;
+  final BoxDecoration?decoration;
+  final BoxDecoration?decorationselected;
   final Function()? onTap;
   final Function()? onLongPress;
   final Function()? onSecondaryTap;

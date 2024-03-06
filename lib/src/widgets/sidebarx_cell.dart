@@ -51,10 +51,11 @@ class _SidebarXCellState extends State<SidebarXCell> {
             ? theme.hoverTextStyle
             : theme.textStyle;
     final decoration =
-        (widget.selected ? theme.selectedItemDecoration : theme.itemDecoration);
+        (widget.selected ? (widget.item.decorationselected??theme.selectedItemDecoration) : (widget.item.decoration??theme.itemDecoration));
     final margin =
         (widget.selected ? theme.selectedItemMargin : theme.itemMargin);
     final padding =
+    widget.item.padding??
         (widget.selected ? theme.selectedItemPadding : theme.itemPadding);
     final textPadding =
         widget.selected ? theme.selectedItemTextPadding : theme.itemTextPadding;
@@ -74,6 +75,8 @@ class _SidebarXCellState extends State<SidebarXCell> {
           ),
           padding: padding ?? const EdgeInsets.all(8),
           margin: margin ?? const EdgeInsets.all(4),
+          height:
+          (widget.selected ? widget.item.heightselected : widget.item.height) ??60,
           child: Row(
             mainAxisAlignment: widget.extended
                 ? MainAxisAlignment.start
