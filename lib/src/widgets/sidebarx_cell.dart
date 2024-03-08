@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 
+import 'circlebutton.dart';
+
 class SidebarXCell extends StatefulWidget {
   const SidebarXCell({
     Key? key,
@@ -69,6 +71,7 @@ class _SidebarXCellState extends State<SidebarXCell> {
         onLongPress: widget.onLongPress,
         onSecondaryTap: widget.onSecondaryTap,
         behavior: HitTestBehavior.opaque,
+
         child: Container(
           decoration: decoration?.copyWith(
             color: _hovered && !widget.selected ? theme.hoverColor : null,
@@ -77,7 +80,8 @@ class _SidebarXCellState extends State<SidebarXCell> {
           margin: margin ?? const EdgeInsets.all(4),
           height:
           (widget.selected ? widget.item.heightselected : widget.item.height) ??60,
-          child: Row(
+          child:Stack(
+              children: [Row(
             mainAxisAlignment: widget.extended
                 ? MainAxisAlignment.start
                 : MainAxisAlignment.center,
@@ -111,18 +115,48 @@ class _SidebarXCellState extends State<SidebarXCell> {
                   ),
                 ),
               ),
+
             ],
+
           ),
+
+                if (widget.item.iconr != null)
+                  AnimatedPositioned(
+                    duration: const Duration(milliseconds: 500),
+                    top:(_hovered?0:-40),
+                    right:0,
+                    child: AnimatedOpacity(
+                      opacity: (_hovered?1:0),
+                      duration: const Duration(milliseconds: 500),
+                      child: CircleButton(
+
+                        backgroundColor: Colors.black.withAlpha(50),
+                        onTap: () {
+                          if (widget.onLongPress != null) {
+                            widget.onLongPress!();
+                          }
+
+                        },
+                        child: Container(
+                            width:15,
+                            height:15,
+                            child: widget.item.iconr!),// const Icon(Icons.close, color: Colors.red),
+                      ),
+                    ),
+                  )
+              ]),
         ),
       ),
     );
   }
 
   void _onEnteredCellZone() {
+    debugPrint("si");
     setState(() => _hovered = true);
   }
 
   void _onExitCellZone() {
+    debugPrint("no");
     setState(() => _hovered = false);
   }
 }

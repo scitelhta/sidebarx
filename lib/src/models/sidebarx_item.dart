@@ -4,6 +4,7 @@ class SidebarXItem {
   const SidebarXItem({
     this.label,
     this.icon,
+    this.iconr,
     this.iconWidget,
     this.height,
     this.heightselected,
@@ -21,6 +22,7 @@ class SidebarXItem {
 
   final String? label;
   final IconData? icon;
+  final Widget ?iconr;
   final Widget? iconWidget;
   final double ?height;
   final double ?heightselected;
