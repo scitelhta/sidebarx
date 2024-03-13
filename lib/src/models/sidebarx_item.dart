@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class SidebarXItem {
   const SidebarXItem({
+    this.index,
     this.label,
     this.icon,
     this.iconr,
@@ -14,12 +15,14 @@ class SidebarXItem {
     this.onTap,
     this.onLongPress,
     this.onSecondaryTap,
+    this.children
   }) : assert(
           (icon != null || iconWidget != null) &&
               (icon == null || iconWidget == null),
           'You can create SidebarXItem with IconData? icon or with Widget? iconWidget',
         );
 
+  final int? index;
   final String? label;
   final IconData? icon;
   final Widget ?iconr;
@@ -32,4 +35,5 @@ class SidebarXItem {
   final Function()? onTap;
   final Function()? onLongPress;
   final Function()? onSecondaryTap;
+  final List<SidebarXItem> ?children;
 }

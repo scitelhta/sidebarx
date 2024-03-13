@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:sidebarx/src/widgets/widgets.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 class SidebarX extends StatefulWidget {
   const SidebarX({
@@ -123,10 +124,70 @@ class _SidebarXState extends State<SidebarX>
                   const SizedBox(),
               widget.headerDivider ?? const SizedBox(),
               Expanded(
-                child: ListView.separated(
+                  child:Scaffold
+                    (
+                    body: CustomScrollView
+                      (
+                      slivers: [
+
+                        MultiSliver
+                          (
+                          // defaults to false
+                          pushPinnedChildren: true,
+                          children:  widget.items.asMap().entries.map((v) {
+                            var item = v.value;
+                            var index = v.key;
+                            //var item = widget.item
+                            return [
+                            SliverPinnedHeader(
+
+                                child: SidebarXCell(
+                                  item: item,
+                                  theme: t,
+                                  animationController: _animationController!,
+                                  extended: widget.controller.extended,
+                                  selected: widget.controller.selectedIndex == index,
+                                  onTap: () => _onItemSelected(item, index),
+                                  onLongPress: () => _onItemLongPressSelected(item, index),
+                                  onSecondaryTap: () =>
+                                      _onItemSecondaryTapSelected(item, index),
+                                )
+                            ),
+                            SliverList(
+
+                              delegate: SliverChildBuilderDelegate(
+                                    (BuildContext context, int iindex) {
+                                  //final item = widget.items[index];
+                                      final iitem = item.children![iindex];
+                                  return SidebarXCell(
+                                    item: iitem,
+                                    theme: t,
+                                    animationController: _animationController!,
+                                    extended: widget.controller.extended,
+                                    selected: widget.controller.selectedIndex == index,
+                                    onTap: () => _onItemSelected(item, index),
+                                    onLongPress: () => _onItemLongPressSelected(item, index),
+                                    onSecondaryTap: () =>
+                                        _onItemSecondaryTapSelected(item, index),
+                                  );
+
+                                },
+                                // 40 list items
+                                childCount: (item.children??[]).length,
+                              ),
+                            ),
+
+                          ];
+                          },).expand((u)=>u).toList() as List<Widget>,
+                        ),
+                              ]
+                      ),
+                    ),
+                  ),
+                /*   child: ListView.builder(
                   itemCount: widget.items.length,
-                  separatorBuilder: widget.separatorBuilder ??
-                      (_, __) => const SizedBox(height: 8),
+                  //separatorBuilder: widget.separatorBuilder ??
+                   //   (_, __) => const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     final item = widget.items[index];
                     return SidebarXCell(
@@ -141,8 +202,8 @@ class _SidebarXState extends State<SidebarX>
                           _onItemSecondaryTapSelected(item, index),
                     );
                   },
-                ),
-              ),
+                ),*/
+
               widget.footerDivider ?? const SizedBox(),
               widget.footerBuilder?.call(context, widget.controller.extended) ??
                   const SizedBox(),

@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 class SidebarXController extends ChangeNotifier {
   SidebarXController({
     required int selectedIndex,
+     int ?selectedSIndex,
     bool? extended,
-  }) : _selectedIndex = selectedIndex {
-    _setExtedned(extended ?? false);
+  }) : _selectedIndex = selectedIndex, _selectedSIndex = selectedSIndex {
+    _setExtended(extended ?? false);
   }
 
   int _selectedIndex;
+  int ?_selectedSIndex;
   var _extended = false;
 
   final _extendedController = StreamController<bool>.broadcast();
@@ -18,8 +20,13 @@ class SidebarXController extends ChangeNotifier {
       _extendedController.stream.asBroadcastStream();
 
   int get selectedIndex => _selectedIndex;
+  int? get selectedSIndex => _selectedSIndex;
   void selectIndex(int val) {
     _selectedIndex = val;
+    notifyListeners();
+  }
+  void selectSIndex(int val) {
+    _selectedSIndex = val;
     notifyListeners();
   }
 
@@ -36,7 +43,7 @@ class SidebarXController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _setExtedned(bool val) {
+  void _setExtended(bool val) {
     _extended = val;
     notifyListeners();
   }

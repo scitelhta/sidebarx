@@ -130,7 +130,7 @@ class _SidebarXCellState extends State<SidebarXCell> {
                       duration: const Duration(milliseconds: 500),
                       child: CircleButton(
 
-                        backgroundColor: Colors.black.withAlpha(50),
+                        backgroundColor: widget.theme.textStyle?.color?.withAlpha(50),
                         onTap: () {
                           if (widget.onLongPress != null) {
                             widget.onLongPress!();
