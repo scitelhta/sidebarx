@@ -8,7 +8,7 @@ void main() {
 class SidebarXExampleApp extends StatelessWidget {
   SidebarXExampleApp({Key? key}) : super(key: key);
 
-  final _controller = SidebarXController(selectedIndex: 0, extended: true);
+  final _controller = SidebarXController( extended: true);
   final _key = GlobalKey<ScaffoldState>();
 
   @override

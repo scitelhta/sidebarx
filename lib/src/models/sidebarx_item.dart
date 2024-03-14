@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 
 class SidebarXItem {
   const SidebarXItem({
-    this.index,
+    required this.id,
     this.label,
     this.icon,
     this.iconr,
     this.iconWidget,
+    this.iconText,
+    this.iconSize,
     this.height,
     this.heightselected,
     this.padding,
@@ -17,16 +19,18 @@ class SidebarXItem {
     this.onSecondaryTap,
     this.children
   }) : assert(
-          (icon != null || iconWidget != null) &&
-              (icon == null || iconWidget == null),
+          (icon != null || iconWidget != null || iconText != null) &&
+              (icon == null || iconWidget == null || iconText == null),
           'You can create SidebarXItem with IconData? icon or with Widget? iconWidget',
         );
 
-  final int? index;
+  final String id;
   final String? label;
   final IconData? icon;
   final Widget ?iconr;
   final Widget? iconWidget;
+  final String ?iconText;
+  final double ?iconSize;
   final double ?height;
   final double ?heightselected;
   final EdgeInsets? padding;
