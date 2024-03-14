@@ -146,8 +146,11 @@ class _SidebarXState extends State<SidebarX>
                                   theme: t,
                                   animationController: _animationController!,
                                   extended: widget.controller.extended,
-                                  selected: widget.controller.selectedIndex == index,
-                                  onTap: () => _onItemSelected(item, index),
+                                  selected: widget.controller.selectedI == item.id,
+                                  onTap: () {
+
+                                    _onItemSelected(item, item.id);
+                                    },
                                   onLongPress: () => _onItemLongPressSelected(item, index),
                                   onSecondaryTap: () =>
                                       _onItemSecondaryTapSelected(item, index),
@@ -164,8 +167,10 @@ class _SidebarXState extends State<SidebarX>
                                     theme: t,
                                     animationController: _animationController!,
                                     extended: widget.controller.extended,
-                                    selected: widget.controller.selectedIndex == index,
-                                    onTap: () => _onItemSelected(item, index),
+                                    selected: (widget.controller.selectedS == iitem.id) && (widget.controller.selectedI == item.id),
+                                    onTap: () {
+                                      _onItemSelected(iitem, item.id, sId: iitem.id);
+                                    },
                                     onLongPress: () => _onItemLongPressSelected(item, index),
                                     onSecondaryTap: () =>
                                         _onItemSecondaryTapSelected(item, index),
@@ -221,11 +226,12 @@ class _SidebarXState extends State<SidebarX>
                         theme: t,
                         animationController: _animationController!,
                         extended: widget.controller.extended,
-                        selected: widget.controller.selectedIndex ==
-                            widget.items.length +
-                                widget.footerItems.length -
-                                index -
-                                1,
+                        selected: false,
+                        //widget.controller.selectedIndex ==
+                          //  widget.items.length +
+                            //    widget.footerItems.length -
+                              //  index -
+                                //1,
                         onTap: () => _onFooterItemSelected(item, index),
                         onLongPress: () =>
                             _onFooterItemLongPressSelected(item, index),
@@ -246,8 +252,8 @@ class _SidebarXState extends State<SidebarX>
 
   void _onFooterItemSelected(SidebarXItem item, int index) {
     item.onTap?.call();
-    widget.controller.selectIndex(
-        widget.items.length + widget.footerItems.length - index - 1);
+    //widget.controller.selectIndex(
+      //  widget.items.length + widget.footerItems.length - index - 1);
   }
 
   void _onFooterItemLongPressSelected(SidebarXItem item, int index) {
@@ -258,9 +264,12 @@ class _SidebarXState extends State<SidebarX>
     item.onSecondaryTap?.call();
   }
 
-  void _onItemSelected(SidebarXItem item, int index) {
+  void _onItemSelected(SidebarXItem item, String iId, {String?sId}) {
     item.onTap?.call();
-    widget.controller.selectIndex(index);
+    widget.controller.selectI(iId);
+    if (sId != null) {
+      widget.controller.selectS(sId);
+    }
   }
 
   void _onItemLongPressSelected(SidebarXItem item, int index) {

@@ -53,7 +53,7 @@ class _SidebarXCellState extends State<SidebarXCell> {
             ? theme.hoverTextStyle
             : theme.textStyle;
     final decoration =
-        (widget.selected ? (widget.item.decorationselected??theme.selectedItemDecoration) : (widget.item.decoration??theme.itemDecoration));
+        (widget.selected ? (widget.item.decorationselected??theme.selectedItemDecoration) : (widget.item.decoration??theme.decoration));
     final margin =
         (widget.selected ? theme.selectedItemMargin : theme.itemMargin);
     final padding =
@@ -99,7 +99,9 @@ class _SidebarXCellState extends State<SidebarXCell> {
               if (widget.item.icon != null)
                 _Icon(item: widget.item, iconTheme: iconTheme)
               else if (widget.item.iconWidget != null)
-                widget.item.iconWidget!,
+                widget.item.iconWidget!
+              else if (widget.item.iconText != null)
+                Text(widget.item.iconText!,    style: textStyle,),
               Flexible(
                 flex: 6,
                 child: FadeTransition(
@@ -129,7 +131,7 @@ class _SidebarXCellState extends State<SidebarXCell> {
                       opacity: (_hovered?1:0),
                       duration: const Duration(milliseconds: 500),
                       child: CircleButton(
-
+                        size:widget.item.iconSize??30,
                         backgroundColor: widget.theme.textStyle?.color?.withAlpha(50),
                         onTap: () {
                           if (widget.onLongPress != null) {
