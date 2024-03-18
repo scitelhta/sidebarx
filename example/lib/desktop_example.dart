@@ -8,7 +8,7 @@ void main() {
 class SidebarXExampleApp extends StatelessWidget {
   SidebarXExampleApp({Key? key}) : super(key: key);
 
-  final _controller = SidebarXController(selectedIndex: 0);
+  final _controller = SidebarXController();
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +84,7 @@ class SidebarXExampleApp extends StatelessWidget {
               },
               items: [
                 SidebarXItem(
+                  id: "home",
                   icon: Icons.home,
                   label: 'Home',
                   onTap: () {
@@ -91,14 +92,17 @@ class SidebarXExampleApp extends StatelessWidget {
                   },
                 ),
                 const SidebarXItem(
+                  id: "search",
                   icon: Icons.search,
                   label: 'Search',
                 ),
                 const SidebarXItem(
+                  id: "people",
                   icon: Icons.people,
                   label: 'People',
                 ),
                 const SidebarXItem(
+                  id: "favorite",
                   icon: Icons.favorite,
                   label: 'Favorites',
                 ),
@@ -130,8 +134,8 @@ class _ScreensExample extends StatelessWidget {
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        switch (controller.selectedIndex) {
-          case 0:
+        switch (controller.selectedI) {
+          case "home":
             return ListView.builder(
               padding: const EdgeInsets.only(top: 10),
               itemBuilder: (context, index) => Container(
@@ -145,27 +149,27 @@ class _ScreensExample extends StatelessWidget {
                 ),
               ),
             );
-          case 1:
+          case "search":
             return Text(
               'Search',
               style: theme.textTheme.headlineSmall,
             );
-          case 2:
+          case "people":
             return Text(
               'People',
               style: theme.textTheme.headlineSmall,
             );
-          case 3:
+          case "favorite":
             return Text(
               'Favorites',
               style: theme.textTheme.headlineSmall,
             );
-          case 4:
+          case "profile":
             return Text(
               'Profile',
               style: theme.textTheme.headlineSmall,
             );
-          case 5:
+          case "settings":
             return Text(
               'Settings',
               style: theme.textTheme.headlineSmall,

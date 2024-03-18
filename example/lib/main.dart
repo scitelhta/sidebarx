@@ -36,7 +36,7 @@ class SidebarXExampleApp extends StatelessWidget {
             appBar: isSmallScreen
                 ? AppBar(
                     backgroundColor: canvasColor,
-                    title: Text(_getTitleByIndex(_controller.selectedIndex)),
+                    title: Text(_getTitleByIndex(_controller.selectedI)),
                     leading: IconButton(
                       onPressed: () {
                         // if (!Platform.isAndroid && !Platform.isIOS) {
@@ -138,6 +138,7 @@ class ExampleSidebarX extends StatelessWidget {
       },
       items: [
         SidebarXItem(
+          id: "home",
           icon: Icons.home,
           label: 'Home',
           onTap: () {
@@ -145,18 +146,22 @@ class ExampleSidebarX extends StatelessWidget {
           },
         ),
         const SidebarXItem(
+          id: "search",
           icon: Icons.search,
           label: 'Search',
         ),
         const SidebarXItem(
+          id: "people",
           icon: Icons.people,
           label: 'People',
         ),
         const SidebarXItem(
+          id: "favorite",
           icon: Icons.favorite,
           label: 'Favorites',
         ),
         const SidebarXItem(
+          id: "flutter",
           iconWidget: FlutterLogo(size: 20),
           label: 'Flutter',
         ),
@@ -179,9 +184,9 @@ class _ScreensExample extends StatelessWidget {
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        final pageTitle = _getTitleByIndex(controller.selectedIndex);
-        switch (controller.selectedIndex) {
-          case 0:
+        final pageTitle = _getTitleByIndex(controller.selectedI);
+        switch (controller.selectedI) {
+          case "home":
             return ListView.builder(
               padding: const EdgeInsets.only(top: 10),
               itemBuilder: (context, index) => Container(
@@ -206,21 +211,21 @@ class _ScreensExample extends StatelessWidget {
   }
 }
 
-String _getTitleByIndex(int index) {
+String _getTitleByIndex(String? index) {
   switch (index) {
-    case 0:
+    case "home":
       return 'Home';
-    case 1:
+    case "search":
       return 'Search';
-    case 2:
+    case "people":
       return 'People';
-    case 3:
+    case "favorite":
       return 'Favorites';
-    case 4:
+    case "custom":
       return 'Custom iconWidget';
-    case 5:
+    case "profile":
       return 'Profile';
-    case 6:
+    case "settings":
       return 'Settings';
     default:
       return 'Not found page';

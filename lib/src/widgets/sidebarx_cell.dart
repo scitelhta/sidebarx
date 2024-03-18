@@ -75,11 +75,25 @@ class _SidebarXCellState extends State<SidebarXCell> {
         child: Container(
           decoration: decoration?.copyWith(
             color: _hovered && !widget.selected ? theme.hoverColor : null,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10)
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.deepPurple.withOpacity(0.8),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
           ),
           padding: padding ?? const EdgeInsets.all(8),
           margin: margin ?? const EdgeInsets.all(4),
-          height:
-          (widget.selected ? widget.item.heightselected : widget.item.height) ??60,
+          //height:
+          //(widget.selected ? widget.item.heightselected : widget.item.height) ??60,
           child:Stack(
               children: [Row(
             mainAxisAlignment: widget.extended

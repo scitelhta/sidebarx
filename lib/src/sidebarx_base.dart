@@ -1,7 +1,39 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:sidebarx/src/widgets/widgets.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  @override
+  double get minExtent => minHeight;
+  @override
+  double get maxExtent => max(maxHeight, minHeight);
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return new SizedBox.expand(child: child);
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
+  }
+}
 
 class SidebarX extends StatefulWidget {
   const SidebarX({
@@ -126,6 +158,7 @@ class _SidebarXState extends State<SidebarX>
               Expanded(
                   child:Scaffold
                     (
+                    backgroundColor: selectedTheme.decoration?.color,
                     body: CustomScrollView
                       (
                       slivers: [
@@ -139,8 +172,11 @@ class _SidebarXState extends State<SidebarX>
                             var index = v.key;
                             //var item = widget.item
                             return [
-                            SliverPinnedHeader(
-
+                            SliverPersistentHeader(
+                              pinned: true,
+                                delegate: _SliverAppBarDelegate(
+                                    minHeight: 50.0,
+                                    maxHeight: 120.0,
                                 child: SidebarXCell(
                                   item: item,
                                   theme: t,
@@ -155,6 +191,7 @@ class _SidebarXState extends State<SidebarX>
                                   onSecondaryTap: () =>
                                       _onItemSecondaryTapSelected(item, index),
                                 )
+                            )
                             ),
                             SliverList(
 
@@ -171,9 +208,9 @@ class _SidebarXState extends State<SidebarX>
                                     onTap: () {
                                       _onItemSelected(iitem, item.id, sId: iitem.id);
                                     },
-                                    onLongPress: () => _onItemLongPressSelected(item, index),
+                                    onLongPress: () => _onItemLongPressSelected(iitem, index),
                                     onSecondaryTap: () =>
-                                        _onItemSecondaryTapSelected(item, index),
+                                        _onItemSecondaryTapSelected(iitem, index),
                                   );
 
                                 },
@@ -218,7 +255,7 @@ class _SidebarXState extends State<SidebarX>
                     reverse: true,
                     itemCount: widget.footerItems.length,
                     separatorBuilder: widget.separatorBuilder ??
-                        (_, __) => const SizedBox(height: 8),
+                        (_, __) => const SizedBox(height: 3),
                     itemBuilder: (context, index) {
                       final item = widget.footerItems.reversed.toList()[index];
                       return SidebarXCell(
